@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Centro de Reportes CFP20</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+  <main>
+    <header><p class="etiqueta">CFP20 · AMDELCO · Laboratorio local</p><h1>Centro de Reportes</h1>
+      <p>Ejercicio de ciberseguridad: usá únicamente datos ficticios.</p></header>
+    {% if error %}<div class="error" role="alert">{{ error }}</div>{% endif %}
+    {% if exito %}<div class="exito" role="status">Reporte ficticio registrado correctamente.</div>{% endif %}
+    <section class="card">
+      <h2>Nuevo reporte</h2>
+      <form method="post" action="/">
+        <label for="titulo">Título</label>
+        <input id="titulo" name="titulo" maxlength="60" required>
+        <label for="categoria">Categoría</label>
+        <select id="categoria" name="categoria" required>
+          <option value="">Elegí una</option>
+          <option value="phishing">Phishing</option>
+          <option value="malware">Malware</option>
+          <option value="contraseña">Contraseña</option>
+          <option value="red">Red</option>
+        </select>
+        <label for="descripcion">Descripción</label>
+        <textarea id="descripcion" name="descripcion" maxlength="250" required></textarea>
+        <button type="submit">Registrar reporte ficticio</button>
+      </form>
+    </section>
+    <section><h2>Últimos reportes</h2>
+      {% for reporte in reportes %}
+        <article class="card">
+          <p class="etiqueta">{{ reporte.categoria }} · {{ reporte.fecha }}</p>
+          <h3>{{ reporte.titulo }}</h3>
+          <p>{{ reporte.descripcion }}</p>
+        </article>
+      {% endfor %}
+    </section>
+    <footer>Aplicación educativa local. No registra usuarios ni guarda datos permanentemente.</footer>
+  </main>
+</body>
+</html>
